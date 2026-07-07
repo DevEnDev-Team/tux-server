@@ -47,6 +47,13 @@ jobs:
           CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o tux-server main.go
           zip -j tux-server-linux.zip tux-server docker-compose.yml Dockerfile
 
+      # 2.5. Checkout de la PWA mobile pour l'intégrer à l'image Docker de production
+      - name: Checkout tux-mobile PWA
+        uses: actions/checkout@v4
+        with:
+          repository: DevEnDev-Team/tux-mobile
+          path: tux-mobile
+
       # 3. Publication de l'image Docker sur GitHub Container Registry (GHCR)
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3

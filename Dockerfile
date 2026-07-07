@@ -23,6 +23,9 @@ WORKDIR /app
 # Copier uniquement le binaire compilé depuis l'étape de build
 COPY --from=builder /app/tux-server .
 
+# Copier la PWA mobile si présente dans le contexte (via astuce wildcard)
+COPY tux-mobil[e] /app/tux-mobile/
+
 # Créer le répertoire pour les volumes de données
 RUN mkdir data
 
