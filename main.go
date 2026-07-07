@@ -413,6 +413,17 @@ func main() {
 	http.HandleFunc("/admin/api/keys/delete", authenticateAdmin(handleAdminDeleteKey))
 	http.HandleFunc("/admin/api/change-password", authenticateAdmin(handleAdminChangePassword))
 
+	// Route racine : Sert la PWA mobile (fichiers statiques) si le dossier existe
+	if _, err := os.Stat("./tux-mobile"); err == nil {
+		log.Println("PWA mobile détectée dans ./tux-mobile. Liaison à la racine /")
+		fs := http.FileServer(http.Dir("./tux-mobile"))
+		http.Handle("/", fs)
+	} else if _, err := os.Stat("./web"); err == nil {
+		log.Println("PWA mobile détectée dans ./web. Liaison à la racine /")
+		fs := http.FileServer(http.Dir("./web"))
+		http.Handle("/", fs)
+	}
+
 	log.Printf("=== Serveur de Synchronisation Post-It (SQLite) ===")
 	log.Printf("Port d'écoute : %s", port)
 	log.Printf("Panneau d'administration disponible sur : http://localhost:%s/admin", port)
