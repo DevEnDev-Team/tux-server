@@ -66,38 +66,22 @@ func loadAdminPassword() {
 	var dbPasswordHash string
 	err = db.QueryRow("SELECT value FROM settings WHERE key = 'admin_password'").Scan(&dbPasswordHash)
 
-	if envPassword != "" {
-		// La variable d'environnement a la priorité.
-		// Pour éviter de re-hasher à chaque démarrage si c'est identique, on vérifie s'il correspond au hash actuel.
-		var needsUpdate bool
-		if err == nil && dbPasswordHash != "" {
-			errCompare := bcrypt.CompareHashAndPassword([]byte(dbPasswordHash), []byte(envPassword))
-			if errCompare != nil {
-				needsUpdate = true
-			} else {
-				adminPasswordHash = dbPasswordHash
-			}
-		} else {
-			needsUpdate = true
-		}
-
-		if needsUpdate {
-			newHash, errHash := bcrypt.GenerateFromPassword([]byte(envPassword), bcrypt.DefaultCost)
-			if errHash != nil {
-				log.Fatalf("Erreur hachage du mot de passe environnement : %v", errHash)
-			}
-			adminPasswordHash = string(newHash)
-			_, _ = db.Exec("INSERT INTO settings (key, value) VALUES ('admin_password', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value", adminPasswordHash)
-		}
-	} else if err == nil && dbPasswordHash != "" {
-		// Sinon on prend la valeur (qui est un hash) en base de données
+	if err == nil && dbPasswordHash != "" {
+		// Si un mot de passe existe déjà en base de données, on l'utilise et on ignore la variable d'environnement.
+		// Cela évite de réinitialiser le mot de passe de l'utilisateur à chaque redémarrage Docker.
 		adminPasswordHash = dbPasswordHash
 	} else {
-		// Sinon valeur par défaut "admin" hachée
-		defaultPassword := "admin"
-		newHash, errHash := bcrypt.GenerateFromPassword([]byte(defaultPassword), bcrypt.DefaultCost)
+		// Sinon (première installation), on initialise le mot de passe.
+		var initialPassword string
+		if envPassword != "" {
+			initialPassword = envPassword
+		} else {
+			initialPassword = "admin"
+		}
+
+		newHash, errHash := bcrypt.GenerateFromPassword([]byte(initialPassword), bcrypt.DefaultCost)
 		if errHash != nil {
-			log.Fatalf("Erreur hachage du mot de passe par défaut : %v", errHash)
+			log.Fatalf("Erreur hachage du mot de passe initial : %v", errHash)
 		}
 		adminPasswordHash = string(newHash)
 		_, _ = db.Exec("INSERT INTO settings (key, value) VALUES ('admin_password', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value", adminPasswordHash)
