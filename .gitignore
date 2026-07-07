@@ -1,0 +1,32 @@
+# Go binaries and builds
+post-it-server
+post-it-server.exe
+*.exe
+*.test
+*.prof
+post-it-server-linux.zip
+
+# SQLite Data
+data/
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Docker local data
+.docker/
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.user
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS temporary files
+.DS_Store
+*.tmp
+*.log
