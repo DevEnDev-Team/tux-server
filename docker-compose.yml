@@ -1,10 +1,10 @@
 version: '3.8'
 
 services:
-  post-it-server:
-    image: ghcr.io/devendev-team/post-it-server:latest
+  tux-server:
+    image: ghcr.io/devendev-team/tux-server:latest
     build: .
-    container_name: post-it-sync-server
+    container_name: tux-sync-server
     ports:
       - "8282:8282"
     environment:

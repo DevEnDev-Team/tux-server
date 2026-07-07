@@ -1,6 +1,6 @@
-# ☁️ Serveur de Synchronisation Post-It (Back Go)
+# ☁️ Serveur de Synchronisation Tux-It (Back Go)
 
-Ce dossier contient le serveur de synchronisation léger et ultra-performant écrit en **Go** pour sauvegarder et synchroniser vos notes Post-It entre plusieurs appareils.
+Ce dossier contient le serveur de synchronisation léger et ultra-performant écrit en **Go** pour sauvegarder et synchroniser vos notes Tux-It entre plusieurs appareils.
 
 Il utilise **SQLite** pour stocker vos données de synchronisation et vos clés d'API, et dispose d'une superbe **console d'administration Web** pour gérer vos clés d'accès.
 
@@ -42,15 +42,15 @@ go run main.go
 
 ### Compilation en un binaire autonome optimisé :
 ```bash
-CGO_ENABLED=0 go build -ldflags="-w -s" -o post-it-server main.go
-./post-it-server
+CGO_ENABLED=0 go build -ldflags="-w -s" -o tux-server main.go
+./tux-server
 ```
 
 ---
 
-## ⚙️ Configuration du client Post-It (C++)
+## ⚙️ Configuration du client Tux-It (C++)
 
-1. Lancez l'application Post-It pour la première fois afin d'ouvrir l'assistant graphique.
+1. Lancez l'application Tux-It pour la première fois afin d'ouvrir l'assistant graphique.
 2. Cochez **"Activer la synchronisation en ligne"**.
 3. Saisissez l'URL de votre serveur (ex : `http://localhost:8282`) et l'une des clés d'API générées sur votre console `/admin`.
 4. Vos notes seront synchronisées automatiquement et sécurisées à chaque changement ! 🦊✨

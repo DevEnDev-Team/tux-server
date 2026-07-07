@@ -44,8 +44,8 @@ jobs:
 
       - name: Build Go Server
         run: |
-          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o post-it-server main.go
-          zip -j tux-server-linux.zip post-it-server docker-compose.yml Dockerfile
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o tux-server main.go
+          zip -j tux-server-linux.zip tux-server docker-compose.yml Dockerfile
 
       # 3. Publication de l'image Docker sur GitHub Container Registry (GHCR)
       - name: Log in to GitHub Container Registry
@@ -101,7 +101,7 @@ jobs:
             Voici le serveur de synchronisation Go précompilé et prêt à être déployé pour Tux-It.
             
             ### 📦 Fichier inclus :
-            * **`tux-server-linux.zip`** : Contient le serveur de synchronisation Go compilé statiquement (`post-it-server`), avec son `docker-compose.yml` et `Dockerfile` pour un déploiement instantané.
+            * **`tux-server-linux.zip`** : Contient le serveur de synchronisation Go compilé statiquement (`tux-server`), avec son `docker-compose.yml` et `Dockerfile` pour un déploiement instantané.
             
             ---
             
