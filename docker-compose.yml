@@ -13,4 +13,6 @@ services:
     volumes:
       # Persister le dossier de données contenant les JSON des utilisateurs
       - ./data:/app/data
+      # Monter la PWA mobile pour qu'elle soit servie à la racine
+      - ./tux-mobile:/app/tux-mobile
     restart: unless-stopped
