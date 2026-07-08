@@ -53,4 +53,4 @@ CGO_ENABLED=0 go build -ldflags="-w -s" -o tux-server main.go
 1. Lancez l'application Tux-It pour la première fois afin d'ouvrir l'assistant graphique.
 2. Cochez **"Activer la synchronisation en ligne"**.
 3. Saisissez l'URL de votre serveur (ex : `http://localhost:8282`) et l'une des clés d'API générées sur votre console `/admin`.
-4. Vos notes seront synchronisées automatiquement et sécurisées à chaque changement ! 🦊✨
+4. Vos notes seront synchronisées automatiquement et sécurisées à chaque changement ! 🐧
